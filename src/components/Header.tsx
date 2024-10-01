@@ -8,6 +8,7 @@ const Header = () => {
        color="#61dafb"
        textAlign="center"
        padding="1em"
+       fontFamily={'sans-serif'}
        >
       <h1>Lista de Tarefas</h1>
       </Heading>

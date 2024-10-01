@@ -6,7 +6,18 @@ const TaskList = (props: Props) => {
   return (
     <div>
       <Box>
-        <Text>Suas Tarefas</Text>
+        <Text 
+        fontWeight={'bold'} 
+        fontSize={20}
+        fontFamily={'sans-serif'}
+        >
+          Suas Tarefas:
+          </Text>
+        <Text
+          fontFamily={'sans-serif'}
+        >
+          Lista de tarefas
+          </Text>
       </Box>
     </div>
   );
