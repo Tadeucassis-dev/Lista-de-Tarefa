@@ -1,11 +1,12 @@
-import { Box, FormControl, Input, Text } from "@chakra-ui/react";
+import { Box, Input, Text } from "@chakra-ui/react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { ITask } from "../interfaces/Task";
 
 interface Props {
   btnText: string;
   taskList: ITask[];
-  setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>
+  setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>;
+  task?: ITask | null;
 }
 
 const TaskForm = ({ btnText, taskList, setTaskList }: Props) => {
@@ -14,17 +15,17 @@ const TaskForm = ({ btnText, taskList, setTaskList }: Props) => {
   const [difficulty, setDifficulty] = useState<number>(0);
 
   const addTaskHandler = (e: FormEvent<HTMLFormElement>) => {
-   e.preventDefault()
+    e.preventDefault();
 
-   const id = Math.floor(Math.random() * 1000)
-   const newTask: ITask = {id, title, difficulty}
+    const id = Math.floor(Math.random() * 1000);
+    const newTask: ITask = { id, title, difficulty };
 
-   setTaskList!([...taskList, newTask])
+    setTaskList!([...taskList, newTask]);
 
-   setTitle("");
-   setDifficulty(0);
+    setTitle("");
+    setDifficulty(0);
 
-   console.log(taskList)
+    console.log(taskList);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,15 +35,14 @@ const TaskForm = ({ btnText, taskList, setTaskList }: Props) => {
       setDifficulty(parseInt(e.target.value));
     }
   };
-  
+
   return (
     <form onSubmit={addTaskHandler}>
       <Box>
         <Text fontWeight={"bold"} fontSize={30} fontFamily={"sans-serif"}>
           O que você vai fazer?
         </Text>
-        <FormControl
-          
+        <Box
           display={"flex"}
           flexDirection={"column"}
           maxWidth={"400px"}
@@ -65,6 +65,7 @@ const TaskForm = ({ btnText, taskList, setTaskList }: Props) => {
               name="title"
               placeholder="Título da Tarefa"
               onChange={handleChange}
+              value={title}
             />
 
             <Text
@@ -80,9 +81,10 @@ const TaskForm = ({ btnText, taskList, setTaskList }: Props) => {
               borderRadius={5}
               border={"1px solid #282c34"}
               type="text"
-              name="title"
+              name="difficulty"
               placeholder="Dificuldade da tarefa"
               onChange={handleChange}
+              value={difficulty}
             />
           </Box>
           <Input
@@ -100,7 +102,7 @@ const TaskForm = ({ btnText, taskList, setTaskList }: Props) => {
             type="submit"
             value={btnText}
           />
-        </FormControl>
+        </Box>
       </Box>
     </form>
   );

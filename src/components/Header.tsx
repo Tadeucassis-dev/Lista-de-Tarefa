@@ -1,4 +1,4 @@
-import { Heading } from "@chakra-ui/react"
+import { Heading, Text } from "@chakra-ui/react"
 
 const Header = () => {
   return (
@@ -9,8 +9,10 @@ const Header = () => {
        textAlign="center"
        padding="1em"
        fontFamily={'sans-serif'}
+       height={'100px'}
+       mb={20}
        >
-      <h1>Lista de Tarefas</h1>
+      <Text fontSize={40}>Lista de Tarefas</Text>
       </Heading>
     </div>
   )
