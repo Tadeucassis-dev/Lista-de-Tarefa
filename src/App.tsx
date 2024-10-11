@@ -10,32 +10,47 @@ import Modal from "./components/Modal";
 function App() {
   const [taskList, setTaskList] = useState<ITask[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para abrir/fechar o modal
-  const [taskToEdit, setTaskToEdit] = useState<ITask | null>(null); // Estado para armazenar a tarefa a ser editada
+  const [taskToUpdate, setTaskToUpdate] = useState<ITask | null>(null); // Estado para armazenar a tarefa a ser editada
 
   const deleteTask = (id: number) => {
-    setTaskList(
-      taskList.filter((task) => {
-        return task.id !== id;
-      })
-    );
+    setTaskList(taskList.filter((task) => task.id !== id));
   };
 
   const openModal = (task: ITask) => {
-    setTaskToEdit(task); // Define a tarefa a ser editada
+    setTaskToUpdate(task); // Define a tarefa a ser editada
     setIsModalOpen(true); // Abre o modal
   };
 
   const closeModal = () => {
     setIsModalOpen(false); // Fecha o modal
-    setTaskToEdit(null); // Reseta a tarefa a ser editada
+    setTaskToUpdate(null); // Reseta a tarefa a ser editada
   };
 
+  const updateTask = (id: number, title: string, difficulty: number) => {
+    const updatedTask: ITask = {
+      id: id,
+      title: title,
+      difficulty: difficulty,
+    };
+  
+    const updatedItems = taskList.map((task) =>
+      task.id === updatedTask.id ? updatedTask : task
+    );
+  
+    setTaskList(updatedItems);
+    setIsModalOpen(false); // Fecha o modal usando o estado
+  };
+  
   return (
     <Container>
-      {/* Modal, só é renderizado se estiver aberto */}
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          <TaskForm btnText={"Editar Tarefa"} taskList={taskList} task={taskToEdit} />
+          <TaskForm
+            btnText={"Editar Tarefa"}
+            taskList={taskList}
+            task={taskToUpdate}
+            handleUpdate={updateTask}
+          />
         </Modal>
       )}
 
@@ -46,7 +61,11 @@ function App() {
           taskList={taskList}
           setTaskList={setTaskList}
         />
-        <TaskList taskList={taskList} handleDelete={deleteTask} handleEdit={openModal} />
+        <TaskList
+          taskList={taskList}
+          handleDelete={deleteTask}
+          handleEdit={openModal}
+        />
       </Box>
       <Footer />
     </Container>
